@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {FC} from 'react';
 import './App.css';
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import Profile from "./components/Profile/Profile";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {AppStateType} from "./redux/redux-store";
+import {Dispatch} from "redux";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type PropsType = {
+    state: AppStateType
+    dispatch: Dispatch
 }
 
-export default App;
+export const App: FC<PropsType> = (props) => {
+    return (
+        <div className="main">
+            <Header/>
+            <div className="nav-content">
+                <Navbar/>
+                <div className={"content"}>
+                    <Routes>
+                        <Route
+                            path={'/'}
+                            element={<Navigate to={'/profile'}/>}
+                        />
+                        <Route path={"/profile"}
+                               element={<Profile
+                                   profilePage={props.state.profilePage}
+                                   dispatch={props.dispatch}
+                               />}
+                        />
+                        <Route path={"/dialogs"}
+                               element={<DialogsContainer/>}/>
+                        <Route path={'/users'} element={<UsersContainer/>}/>
+                    </Routes>
+                </div>
+            </div>
+        </div>
+    )
+}

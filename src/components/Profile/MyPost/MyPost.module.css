@@ -1,0 +1,8 @@
+.newPost {
+    margin: 10px;
+    display: flex;
+}
+
+.buttonAdd {
+    height: 80%;
+}

@@ -1,0 +1,10 @@
+.imageMain {
+    background-image: url("https://i.sunhome.ru/poetry/220/muzika-kosmosa.orig.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+}
+
+.content {
+    padding: 15px;
+}

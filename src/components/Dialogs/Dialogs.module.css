@@ -1,0 +1,15 @@
+.dialogs {
+    display: flex;
+}
+
+.dialogsItems {
+    list-style-type: none;
+}
+
+.messages {
+    list-style-type: none;
+}
+
+.textarea {
+    margin: 25px 0 0 25px;
+}
