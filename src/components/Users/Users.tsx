@@ -6,9 +6,7 @@ import {UsersType} from "../../redux/users-reducer";
 
 export class Users extends React.Component<UsersToPropsType, UsersType> {
 
-    constructor(props: UsersToPropsType) {
-        super(props)
-
+    componentDidMount(): void {
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
             console.log(response)
             this.props.setUsers(response.data.items)

@@ -23,19 +23,7 @@ type UsersReducerType = (state: UsersInitialStateType, action: DispatchActionTyp
 }
 
 const initialState: UsersInitialStateType = {
-    users: [
-    //     {
-        //     name: 'Roma',
-        //     id: 1,
-        //     uniqueUrlName: null,
-        //     photos: {
-        //         small: null,
-        //         large: null,
-        //     },
-        //     status: null,
-        //     followed: false
-        // }
-    ]
+    users: []
 }
 
 export const usersReducer: UsersReducerType = (state = initialState, action) => {
@@ -51,7 +39,7 @@ export const usersReducer: UsersReducerType = (state = initialState, action) => 
                 users: state.users.map(el => el.id === action.id && el.followed ? {...el, followed: false} : el)
             }
         case SET_USERS:
-            // if (state.items.length > 0) return state
+            if (state.users.length > 0) return state
             return {...state, users: [...state.users, ...action.users]}
         default:
             return state
