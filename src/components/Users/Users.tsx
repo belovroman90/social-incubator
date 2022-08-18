@@ -1,10 +1,11 @@
 import React from 'react'
 import axios from "axios"
+import classes from "./Users.module.css"
 import userAvatar from '../../assets/joji.jpg'
-import {UsersToPropsType} from "./UsersContainer";
+import {UsersPropsType} from "./UsersContainer";
 import {UsersType} from "../../redux/users-reducer";
 
-export class Users extends React.Component<UsersToPropsType, UsersType> {
+export class Users extends React.Component<UsersPropsType, UsersType> {
 
     componentDidMount(): void {
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
@@ -14,9 +15,23 @@ export class Users extends React.Component<UsersToPropsType, UsersType> {
     }
 
     render() {
+
+        const pagesCount = this.props.totalUsersCount / this.props.pageSize
+        const pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return (
             <div>
-                {this.props.state.users.map(u => {
+
+                <div>
+                    {pages.map(p => {
+                        return <span className={classes.selectedPage}>{p}</span>
+                    })}
+                </div>
+
+                {this.props.users.map(u => {
 
                     return (
                         <div key={u.id}>

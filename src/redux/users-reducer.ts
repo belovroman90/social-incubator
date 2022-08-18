@@ -14,19 +14,20 @@ type UserType = {
     followed: boolean
 }
 export type UsersType = UserType[]
-export type UsersInitialStateType = { users: UsersType }
-
+export type UsersInitialStateType = {
+    users: UsersType
+    pageSize: number
+    totalUsersCount: number
+}
 type DispatchActionType = ReturnType<typeof followAC> | ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>
 
-type UsersReducerType = (state: UsersInitialStateType, action: DispatchActionType) => {
-    users: UsersType
-}
-
 const initialState: UsersInitialStateType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 10,
 }
 
-export const usersReducer: UsersReducerType = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action: DispatchActionType): UsersInitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {

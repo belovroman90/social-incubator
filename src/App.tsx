@@ -34,7 +34,9 @@ export const App: FC<PropsType> = (props) => {
                         />
                         <Route path={"/dialogs"}
                                element={<DialogsContainer/>}/>
-                        <Route path={'/users'} element={<UsersContainer/>}/>
+
+                        <Route path={'/users'}
+                               element={<UsersContainer/>}/>
                     </Routes>
                 </div>
             </div>

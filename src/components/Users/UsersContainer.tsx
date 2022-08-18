@@ -1,22 +1,26 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-import {followAC, setUsersAC, unFollowAC, UsersInitialStateType, UsersType} from "../../redux/users-reducer";
+import {followAC, setUsersAC, unFollowAC, UsersType} from "../../redux/users-reducer";
 import {Users} from "./Users";
 
 type UsersStateToPropsType = {
-    state: UsersInitialStateType
+    users: UsersType
+    pageSize: number
+    totalUsersCount: number
 }
 type UsersDispatchToPropsType = {
     onClickFollow: (id: number) => void
     onClickUnFollow: (id: number) => void
     setUsers: (users: UsersType) => void
 }
-export type UsersToPropsType = UsersStateToPropsType & UsersDispatchToPropsType
+export type UsersPropsType = UsersStateToPropsType & UsersDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        state: state.usersPage
+        users: state.usersPage.users,
+        pageSize: state.usersPage.pageSize,
+        totalUsersCount: state.usersPage.totalUsersCount
     }
 }
 
