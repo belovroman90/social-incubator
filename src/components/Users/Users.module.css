@@ -1,0 +1,14 @@
+.pages {
+    user-select: none;
+}
+
+.selectedPage {
+    font-weight: bold;
+    padding-right: 4px;
+}
+
+.page {
+    font-weight: normal;
+    cursor: pointer;
+    padding-right: 4px;
+}

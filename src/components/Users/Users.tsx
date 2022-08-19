@@ -1,7 +1,8 @@
 import React, {FC} from "react"
-import classes from "./UsersAPIComponent.module.css"
+import classes from "./Users.module.css"
 import userAvatar from "../../assets/joji.jpg"
 import {UsersType} from "../../redux/users-reducer"
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
     users: UsersType
@@ -10,8 +11,8 @@ type PropsType = {
     currentPage: number
     setUsers: (users: UsersType) => void
     setCurrentPage: (pageNumber: number) => void
-    onClickFollow: (id: number) => void
-    onClickUnFollow: (id: number) => void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
 }
 
 export const Users: FC<PropsType> = (props) => {
@@ -24,10 +25,10 @@ export const Users: FC<PropsType> = (props) => {
 
     return (
         <div>
-
-            <div>
+            <div className={classes.pages}>
                 {pages.map(p => {
                     return <span
+                        key={p}
                         className={props.currentPage === p ? classes.selectedPage : classes.page}
                         onClick={() => props.setCurrentPage(p)}
                     >{p}</span>
@@ -39,12 +40,15 @@ export const Users: FC<PropsType> = (props) => {
                 return (
                     <div key={u.id}>
                         <span>
-                            <img src={u.photos.small ? u.photos.small : userAvatar} alt="avatar"/>
+                            <NavLink to={'/profile/' + u.id}>
+                                <img src={u.photos.small ? u.photos.small : userAvatar} alt="avatar"/>
+                            </NavLink>
+
                             {u.followed ? <button
-                                    onClick={() => props.onClickUnFollow(u.id)}
+                                    onClick={() => props.unFollow(u.id)}
                                 >UnFollow</button> :
                                 <button
-                                    onClick={() => props.onClickFollow(u.id)}
+                                    onClick={() => props.follow(u.id)}
                                 >Follow</button>}
                         </span>
                         <span>

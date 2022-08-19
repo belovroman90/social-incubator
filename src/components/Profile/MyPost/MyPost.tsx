@@ -14,7 +14,9 @@ export const MyPost: FC<ProfileToPropsType> = (props) => {
     }
 
     const postsElements = props.profilePage.postsMessages.map(el => {
-        return <Post key={el.id} message={el.post}/>
+        return (
+            <Post key={el.id} message={el.post}/>
+        )
     })
 
     return (

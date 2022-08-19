@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {AppStateType} from "./redux/redux-store";
 import {Dispatch} from "redux";
 import UsersContainer from "./components/Users/UsersContainer";
+import {ProfileContainer} from "./components/Profile/ProfileContainer";
 
 type PropsType = {
     state: AppStateType
@@ -26,11 +26,13 @@ export const App: FC<PropsType> = (props) => {
                             path={'/'}
                             element={<Navigate to={'/profile'}/>}
                         />
-                        <Route path={"/profile"}
-                               element={<Profile
-                                   profilePage={props.state.profilePage}
-                                   dispatch={props.dispatch}
-                               />}
+                        <Route path={"/profile/*"}
+                               element={
+                                   <ProfileContainer
+                                       // Profile
+                                       // profilePage={props.state.profilePage}
+                                       // dispatch={props.dispatch}
+                                   />}
                         />
                         <Route path={"/dialogs"}
                                element={<DialogsContainer/>}/>

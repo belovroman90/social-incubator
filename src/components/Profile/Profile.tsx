@@ -1,21 +1,19 @@
 import React, {FC} from "react";
 import classes from "./Profile.module.css";
 import {MyPostContainer} from "./MyPost/MyPostContainer";
-import {Dispatch} from "redux";
-import {ProfileInitialStateType} from "../../redux/profile-reducer";
+import {ProfileType} from "../../redux/profile-reducer";
+import {url} from "inspector";
 
 type PropsType = {
-    profilePage: ProfileInitialStateType
-    dispatch: Dispatch
+    profile: ProfileType
 }
 
-const Profile: FC<PropsType> = (props) => {
+export const Profile: FC<PropsType> = (props) => {
     return (
-        <section className={classes.container}>
-            <div className={classes.imageMain}>`</div>
+        <section>
+            <div className={classes.imageMain}></div>
+            {/*<img src={props.profile.photo.small} alt="photoProfile"/>*/}
             <MyPostContainer/>
         </section>
     )
 }
-
-export default Profile;

@@ -3,6 +3,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
 
 type UserType = {
     name: string
@@ -21,19 +22,22 @@ export type UsersInitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 type DispatchActionType =
-    ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalCountAC>
+    ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof toggleIsFetching>
 
 const initialState: UsersInitialStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetching: false,
 }
 
 export const usersReducer = (state = initialState, action: DispatchActionType): UsersInitialStateType => {
@@ -54,13 +58,16 @@ export const usersReducer = (state = initialState, action: DispatchActionType): 
             return {...state, currentPage: action.payload.page}
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.payload.totalCount}
+        case TOGGLE_IS_FETCHING:
+            return {...state, isFetching: action.payload.isFetching}
         default:
             return state
     }
 }
 
-export const followAC = (id: number) => ({type: FOLLOW, id} as const)
-export const unFollowAC = (id: number) => ({type: UNFOLLOW, id} as const)
-export const setUsersAC = (users: UsersType) => ({type: SET_USERS, users} as const)
-export const setCurrentPageAC = (page: number) => ({type: SET_CURRENT_PAGE, payload: {page}} as const)
-export const setTotalCountAC = (totalCount: number) => ({type: SET_TOTAL_COUNT, payload: {totalCount}} as const)
+export const follow = (id: number) => ({type: FOLLOW, id} as const)
+export const unFollow = (id: number) => ({type: UNFOLLOW, id} as const)
+export const setUsers = (users: UsersType) => ({type: SET_USERS, users} as const)
+export const setCurrentPage = (page: number) => ({type: SET_CURRENT_PAGE, payload: {page}} as const)
+export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT, payload: {totalCount}} as const)
+export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, payload: {isFetching}} as const)
