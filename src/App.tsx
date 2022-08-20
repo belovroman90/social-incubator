@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {AppStateType} from "./redux/redux-store";
 import {Dispatch} from "redux";
 import UsersContainer from "./components/Users/UsersContainer";
-import {ProfileContainer} from "./components/Profile/ProfileContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 type PropsType = {
     state: AppStateType
@@ -15,33 +15,23 @@ type PropsType = {
 }
 
 export const App: FC<PropsType> = (props) => {
-    return (
-        <div className="main">
-            <Header/>
-            <div className="nav-content">
-                <Navbar/>
-                <div className={"content"}>
-                    <Routes>
-                        <Route
-                            path={'/'}
-                            element={<Navigate to={'/profile'}/>}
-                        />
-                        <Route path={"/profile/*"}
-                               element={
-                                   <ProfileContainer
-                                       // Profile
-                                       // profilePage={props.state.profilePage}
-                                       // dispatch={props.dispatch}
-                                   />}
-                        />
-                        <Route path={"/dialogs"}
-                               element={<DialogsContainer/>}/>
+    return <div className="main">
+        <Header/>
+        <div className="nav-content">
+            <Navbar/>
+            <div className={"content"}>
+                <Routes>
+                    <Route path='/profile' element={<ProfileContainer/>}/>
+                    <Route path={"/profile/:userID"}
+                           element={<ProfileContainer/>}
+                    />
+                    <Route path={"/dialogs"}
+                           element={<DialogsContainer/>}/>
 
-                        <Route path={'/users'}
-                               element={<UsersContainer/>}/>
-                    </Routes>
-                </div>
+                    <Route path={'/users'}
+                           element={<UsersContainer/>}/>
+                </Routes>
             </div>
         </div>
-    )
+    </div>
 }

@@ -1,18 +1,17 @@
-import React, {FC} from "react";
-import classes from "./Profile.module.css";
-import {MyPostContainer} from "./MyPost/MyPostContainer";
-import {ProfileType} from "../../redux/profile-reducer";
-import {url} from "inspector";
+import React, {FC} from "react"
+import classes from "./Profile.module.css"
+import userAvatar from "../../assets/joji.jpg"
+import {MyPostContainer} from "./MyPost/MyPostContainer"
 
 type PropsType = {
-    profile: ProfileType
+    profile: string
 }
 
 export const Profile: FC<PropsType> = (props) => {
     return (
         <section>
             <div className={classes.imageMain}></div>
-            {/*<img src={props.profile.photo.small} alt="photoProfile"/>*/}
+            <img src={props.profile ? props.profile : userAvatar} alt="profilePhoto"/>
             <MyPostContainer/>
         </section>
     )

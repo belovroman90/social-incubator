@@ -7,11 +7,10 @@ type PostMessageType = {
     post: string
 }
 export type PostsMessagesType = PostMessageType[]
-export type ProfileType = any
 export type ProfileInitialStateType = {
     postsMessages: Array<PostMessageType>
     newPostText: string
-    profile: ProfileType
+    profile: string
 }
 
 type DispatchActionType =
@@ -26,7 +25,7 @@ const initialState: ProfileInitialStateType = {
         {id: 3, post: "What i am doing?"},
     ],
     newPostText: "",
-    profile: null,
+    profile: '',
 }
 
 export const profileReducer = (state = initialState, action: DispatchActionType): ProfileInitialStateType => {
@@ -42,7 +41,7 @@ export const profileReducer = (state = initialState, action: DispatchActionType)
             stateCopy.newPostText = ""
             return stateCopy
         case SET_USERS_PROFILE:
-            return {...state, profile: action.profile}
+            return {...state, profile: action.payload}
         default:
             return state
     }
@@ -55,4 +54,4 @@ export const changeNewPostTextAC = (newPostText: string) => ({
 export const addPostAC = () => ({
     type: ADD_POST,
 } as const)
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USERS_PROFILE, profile} as const)
+export const setUserProfile = (profile: string) => ({type: SET_USERS_PROFILE, payload: profile} as const)
