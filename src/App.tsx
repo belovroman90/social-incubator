@@ -30,6 +30,7 @@ export const App: FC<PropsType> = (props) => {
 
                     <Route path={'/users'}
                            element={<UsersContainer/>}/>
+                    <Route path='/' element={<ProfileContainer/>}/>
                 </Routes>
             </div>
         </div>

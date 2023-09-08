@@ -6,7 +6,7 @@ import {App} from "./App";
 import './index.css';
 import {Provider} from "react-redux";
 import {store} from "./redux/redux-store";
-
+//react-scripts --openssl-legacy-provider start
 ReactDOM.render(
     <BrowserRouter>
         <React.StrictMode>
