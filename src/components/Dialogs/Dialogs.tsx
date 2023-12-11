@@ -4,7 +4,10 @@ import {FriendDialogItem} from "./DialogItem/FriendDialogItem";
 import {DialogsToPropsType} from "./DialogsContainer";
 import {Message} from "./Message/Message";
 
-type PropsType = DialogsToPropsType
+type AuthType = {
+    isAuth: boolean
+}
+type PropsType = DialogsToPropsType & AuthType
 
 const Dialogs: FC<PropsType> = (props) => {
 
@@ -37,6 +40,8 @@ const Dialogs: FC<PropsType> = (props) => {
         props.onClickAddMessage()
     }
 
+    // if (!props.isAuth) return <Navigate to='/login'/>
+
     return (
         <div>
             <div className={s.dialogs}>
@@ -52,7 +57,7 @@ const Dialogs: FC<PropsType> = (props) => {
                 className={s.textarea}
                 onChange={onChangeTextarea}
                 onKeyPress={onEnterAddMessage}
-            >`</textarea>
+            ></textarea>
             <button onClick={onClickAddMessage}>+</button>
         </div>
     )

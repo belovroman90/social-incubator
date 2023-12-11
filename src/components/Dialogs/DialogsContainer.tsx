@@ -1,19 +1,10 @@
-import {KeyboardEvent} from 'react';
+import React, {KeyboardEvent} from 'react';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {addMessageAC, changeNewMessageTextAC, DialogsInitialStateType} from "../../redux/dialogs-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-
-export type MapStateToPropsType = {
-    dialogsPage: DialogsInitialStateType
-}
-export type MapDispatchToPropsType = {
-    onChangeTextArea: (text: string) => void
-    onEnterAddMessage: (e: KeyboardEvent<HTMLTextAreaElement>) => void
-    onClickAddMessage: () => void
-}
-export type DialogsToPropsType = MapStateToPropsType & MapDispatchToPropsType
+import {withAuthRedirect} from "../../HOC/AuthRedirect";
 
 
 function mapStateToProps(state: AppStateType): MapStateToPropsType {
@@ -36,4 +27,20 @@ function mapDispatchToProps(dispatch: Dispatch): MapDispatchToPropsType {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+const AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
+
+// types
+
+export type MapStateToPropsType = {
+    dialogsPage: DialogsInitialStateType
+}
+
+export type MapDispatchToPropsType = {
+    onChangeTextArea: (text: string) => void
+    onEnterAddMessage: (e: KeyboardEvent<HTMLTextAreaElement>) => void
+    onClickAddMessage: () => void
+}
+
+export type DialogsToPropsType = MapStateToPropsType & MapDispatchToPropsType

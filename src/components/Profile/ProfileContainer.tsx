@@ -1,18 +1,11 @@
 import React from "react"
 import {Profile} from "./Profile";
-import axios from "axios";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {getUserProfileTC} from "../../redux/profile-reducer";
+import {withAuthRedirect} from "../../HOC/AuthRedirect";
 
-type ProfileStateToPropsType = {
-    profile: string
-}
-type ProfileDispatchToPropsType = {
-    setUserProfile: (profile: string) => void
-}
-type ProfilePropsType = ProfileStateToPropsType & ProfileDispatchToPropsType
 
 function withRouter(Component: any) {
     function ComponentWithRouterProp(props: ProfilePropsType) {
@@ -33,24 +26,40 @@ function withRouter(Component: any) {
 class ProfileContainer extends React.Component<any> {
 
     componentDidMount(): void {
+        console.log(this.props.router.params)
         let userID = this.props.router.params.userID
         if (!userID) userID = 2
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`).then(response => {
-            return this.props.setUserProfile(response.data.photos.large)
-        })
+        this.props.getUserProfile(userID)
     }
 
     render() {
         return (
-            <Profile profile={this.props.profile}/>
+            <Profile
+                profile={this.props.profile}
+                isFetching={this.props.isFetching}
+                isAuth={this.props.isAuth}
+            />
         )
     }
 }
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isFetching: state.profilePage.fetching,
     }
 }
 
-export default connect(mapStateToProps, {setUserProfile})(withRouter(ProfileContainer))
+const AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
+export default connect(mapStateToProps, {getUserProfile: getUserProfileTC})(withRouter(AuthRedirectComponent))
+
+// types
+type MapStateToPropsType = {
+    profile: string
+    isFetching: boolean
+}
+type MapDispatchToPropsType = {
+    getUserProfile: (userID: number) => void
+}
+type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType

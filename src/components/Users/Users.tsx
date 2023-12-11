@@ -1,23 +1,28 @@
 import React, {FC} from "react"
 import classes from "./Users.module.css"
 import userAvatar from "../../assets/joji.jpg"
-import {UsersType} from "../../redux/users-reducer"
+import {followTC, unFollowTC, UsersType} from "../../redux/users-reducer"
 import {NavLink} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {AppThunkDispatch} from "../../redux/redux-store";
 
 type PropsType = {
     users: UsersType
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    followingUsersID: number[]
     setUsers: (users: UsersType) => void
     setCurrentPage: (pageNumber: number) => void
-    follow: (id: number) => void
-    unFollow: (id: number) => void
+    setFollowingStatus: (id: number, following: boolean) => void
+    getUsers: (currentPage: number, pageSize: number) => void
 }
 
 export const Users: FC<PropsType> = (props) => {
 
-    const pagesCount = Math.ceil(props.totalUsersCount / 500 / props.pageSize)
+    const dispatch = useDispatch<AppThunkDispatch>()
+
+    const pagesCount = Math.ceil(props.totalUsersCount / 2000 / props.pageSize)
     const pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -44,12 +49,18 @@ export const Users: FC<PropsType> = (props) => {
                                 <img src={u.photos.small ? u.photos.small : userAvatar} alt="avatar"/>
                             </NavLink>
 
-                            {u.followed ? <button
-                                    onClick={() => props.unFollow(u.id)}
+                            {u.followed ? <button onClick={() => {
+                                    dispatch(unFollowTC(u.id))
+                                }}
+                                                  disabled={props.followingUsersID.some(id => id === u.id) && u.followed}
                                 >UnFollow</button> :
-                                <button
-                                    onClick={() => props.follow(u.id)}
+
+                                <button onClick={() => {
+                                    dispatch(followTC(u.id))
+                                }}
+                                        disabled={props.followingUsersID.some(id => id === u.id) && !u.followed}
                                 >Follow</button>}
+
                         </span>
                         <span>
                             <span>
